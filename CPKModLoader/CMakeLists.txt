@@ -26,4 +26,4 @@ target_include_directories(CPKModLoader PRIVATE
 )
 
 target_link_libraries(CPKModLoader PRIVATE
-        ${CMAKE_SOURCE_DIR}/bins/JAPI.dll)
+        ${CMAKE_CURRENT_SOURCE_DIR}/bins/JAPI.dll)

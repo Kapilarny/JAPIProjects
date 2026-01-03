@@ -14,4 +14,4 @@ target_include_directories(NoCursorTrap PRIVATE
 )
 
 target_link_libraries(NoCursorTrap PRIVATE
-        ${CMAKE_SOURCE_DIR}/bins/JAPI.dll)
+        ${CMAKE_CURRENT_SOURCE_DIR}/bins/JAPI.dll)

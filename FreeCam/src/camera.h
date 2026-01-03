@@ -49,7 +49,7 @@ public:
         Position += Right * SPEED * (float)direction;
     }
     void ChangeY(int direction) {
-        Position.y += SPEED * (float)direction;
+        Position.z += SPEED * (float)direction;
     }
     void ChangeZ(int direction) {
         Position += Front * SPEED * (float)direction;

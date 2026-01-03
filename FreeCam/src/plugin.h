@@ -5,6 +5,8 @@
 
 #include <JoJoAPI.h>
 
+EXPORT void __stdcall DrawImGUI();
+
 EXPORT JAPIModMeta __stdcall GetModMeta();
 EXPORT void __stdcall ModInit();
 
@@ -13,5 +15,6 @@ EXPORT void __stdcall ModInit();
 #define JDEBUG(fmt, ...) JAPI_LogMessage(JAPI_LOG_LEVEL_DEBUG, fmt, ##__VA_ARGS__)
 #define JWARN(fmt, ...) JAPI_LogMessage(JAPI_LOG_LEVEL_WARN, fmt, ##__VA_ARGS__)
 #define JINFO(fmt, ...) JAPI_LogMessage(JAPI_LOG_LEVEL_INFO, fmt, ##__VA_ARGS__)
+#define JTRACE(fmt, ...) JAPI_LogMessage(JAPI_LOG_LEVEL_TRACE, fmt, ##__VA_ARGS__)
 
 #endif //JAPI_REWRITE_TESTPLUGIN_PLUGIN_H
