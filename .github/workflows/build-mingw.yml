@@ -81,9 +81,7 @@ jobs:
   upload:
     needs: build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: ${{ fromJson(needs.build.outputs.matrix) }}
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     steps:
     - name: Download artifacts
       uses: actions/download-artifact@v4
@@ -91,8 +89,12 @@ jobs:
         name: build-output
         path: artifacts
     
-    - name: Upload ${{ matrix.project }}
-      uses: actions/upload-artifact@v4
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: ${{ matrix.project }}
-        path: artifacts/${{ matrix.project }}/**
+        tag_name: build-${{ github.run_number }}
+        name: Build ${{ github.run_number }}
+        files: artifacts/**/*.dll
+        fail_on_unmatched_files: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
