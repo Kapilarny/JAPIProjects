@@ -12,7 +12,7 @@ JAPIModMeta GetModMeta() {
         "Kapilarny",
         "CPKModLoader",
         "1.0.0",
-        "A JAPI plugin."
+        "Appends additional CPKs to the game from the japi/cpks/ directory."
     };
 
     return meta;
