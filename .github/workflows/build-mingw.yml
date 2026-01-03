@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    outputs:
+      matrix: ${{ steps.discover.outputs.matrix }}
     
     steps:
     - name: Checkout code
@@ -39,11 +41,58 @@ jobs:
         cd build
         cmake --build . --config Release -j$(nproc)
     
-    - name: Upload artifacts
+    - name: Discover projects
+      id: discover
+      shell: msys2 {0}
+      run: |
+        projects=""
+        for dll in build/*/*.dll; do
+          if [ -f "$dll" ]; then
+            project=$(basename $(dirname "$dll"))
+            if [ -z "$projects" ]; then
+              projects="\"$project\""
+            else
+              projects="$projects,\"$project\""
+            fi
+          fi
+        done
+        echo "matrix=[$projects]" >> $GITHUB_OUTPUT
+        echo "Found projects: $projects"
+    
+    - name: Organize artifacts
+      shell: msys2 {0}
+      run: |
+        mkdir -p artifacts
+        for dll in build/*/*.dll; do
+          if [ -f "$dll" ]; then
+            project=$(basename $(dirname "$dll"))
+            mkdir -p "artifacts/$project"
+            cp "$dll" "artifacts/$project/"
+            echo "Prepared: $project/$(basename $dll)"
+          fi
+        done
+    
+    - name: Upload build output
       uses: actions/upload-artifact@v4
       with:
-        name: mingw-build
-        path: |
-          build/**/*.dll
-          build/**/*.exe
-          **/bins/**
+        name: build-output
+        path: artifacts/
+  
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ${{ fromJson(needs.build.outputs.matrix) }}
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-output
+        path: artifacts
+    
+    - name: Upload ${{ matrix.project }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.project }}
+        path: artifacts/${{ matrix.project }}/**
