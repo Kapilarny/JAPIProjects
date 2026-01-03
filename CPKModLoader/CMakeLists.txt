@@ -16,6 +16,13 @@ elseif((CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang") AND STATIC_CPP_RUNTIME)
     )
 endif()
 
+# Disable tail call optimization to improve stack traces + make API calls not bug out in some cases
+if (MSVC)
+    add_compile_options(/Oy-)
+else()
+    add_compile_options(-fno-optimize-sibling-calls)
+endif()
+
 add_library(CPKModLoader SHARED
         src/main.cpp
 )

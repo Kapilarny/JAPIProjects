@@ -5,6 +5,7 @@
 
 #include <istream>
 #include <fstream>
+#include <iostream>
 
 JAPIModMeta GetModMeta() {
     static JAPIModMeta meta = {
