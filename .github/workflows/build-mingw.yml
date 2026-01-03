@@ -20,8 +20,8 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: >-
-          mingw-w64-x86_64-gcc=13.4.0
+        install: >-     
+          mingw-w64-x86_64-gcc=15.2.0-8
           mingw-w64-x86_64-cmake
           mingw-w64-x86_64-ninja
           make
