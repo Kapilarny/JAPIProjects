@@ -4,7 +4,7 @@ project(CPKModLoader VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
 
-option(STATIC_CPP_RUNTIME "Link C/C++ runtime statically" ON)
+option(STATIC_CPP_RUNTIME "Link C/C++ runtime statically" OFF)
 
 if (MSVC AND STATIC_CPP_RUNTIME)
     set(CMAKE_MSVC_RUNTIME_LIBRARY
